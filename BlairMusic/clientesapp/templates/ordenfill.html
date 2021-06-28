@@ -1,0 +1,279 @@
+{% extends 'clientesapp/base.html' %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Llenar Orden</title>
+    </head>
+    <body>
+
+        {% block content %}
+            <form method="POST" class="post-form" action="{% url 'ordenfill' client.id %}">
+            {% csrf_token %}
+            <div class="container">
+                <br>
+                <!-- datos -->
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label"></label>
+                        <div class="col-sm-4">
+                            <h3>Ingrese los Datos</h3>
+                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Cliente</label>
+                        <div class="col-sm-4">
+                            <input type="text" maxlength="20" value="{{ client.nombre }}" disabled>
+                        </div>
+                    <label class="col-sm-2 col-form-label">Orden</label>
+                    <div class="col-sm-4">
+                        {{orden.num_orden}}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Fecha de Entrada</label>
+                    <div class="col-sm-4">
+                        {{orden.fechain}}
+                    </div>
+                    <label class="col-sm-2 col-form-label">Fecha de Salida</label>
+                    <div class="col-sm-4">
+                        {{orden.fechaout}}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Instrumento</label>
+                    <div class="col-sm-4">
+                        {{orden.instrumento}}
+                    </div>
+                    <label class="col-sm-2 col-form-label">Marca</label>
+                    <div class="col-sm-4">
+                        {{orden.marca}}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Referencia</label>
+                    <div class="col-sm-4">
+                        {{orden.referencia}}
+                    </div>
+                    <label class="col-sm-2 col-form-label">Serial</label>
+                    <div class="col-sm-4">
+                        {{orden.serial}}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Encargado</label>
+                    <div class="col-sm-4">
+                        {{orden.encargado}}
+                    </div>
+                    <label class="col-sm-2 col-form-label">Abono</label>
+                    <div class="col-sm-4">
+                        {{orden.abono}}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Estado</label>
+                    <div class = "dropdown">
+                        <ul class="dropdown-menu">
+                            {{ for i in orden.STATUS }}
+                            <li>{{orden.estado}}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- cuerdas -->
+                <div class="card card-body">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Cuerdas</label>
+                        <div class="col-sm-4">
+                            {{orden.cuerdas}}
+                        </div>
+                        <label class="col-sm-2 col-form-label">Afinacion</label>
+                        <div class="col-sm-4">
+                            {{orden.afinacion}}
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-sm" width=100%>
+                        <tr>
+                            <td class="text-center">
+                                <h5>0.8</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>0.9</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>0.10</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>0.11</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>0.12</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>Las Trajo</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                {{orden.cero8}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.cero9}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.cero10}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.cero11}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.cero12}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.lastrajo}}
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+                <br>
+                <!-- Tipo de instrumento -->
+                <div class="card card-body">
+                    <label class="col-sm-2 col-form-label"><h5>Clase de Instrumento</h5></label>
+                    <table class="table table-striped table-bordered table-sm" width=100%>
+                        <tr>
+                            <td class="text-center">
+                                <h5>P. Fijo</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>P. Flotante</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>E.A.</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>Acustica</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>Bajo</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                {{orden.pfijo}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.pflotante}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.elac}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.acustica}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.bajo}}
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-striped table-bordered table-sm" width=100%>
+                        <tr>
+                            <td class="text-center">
+                                <h5>Teclado</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>Vientos</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>Percusion</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>Pedal</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>Amplificador</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                {{orden.teclado}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.vientos}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.percusion}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.pedal}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.amplificador}}
+                            </td>
+                        </tr>
+
+                    </table>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Otro:</label>
+                        <div class="col-sm-4">
+                            {{orden.otro}}
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="card card-body">
+                    <label class="col-sm-2 col-form-label"><h5>Estuche</h5></label>
+                    <table class="table table-striped table-bordered table-sm" width=100%>
+                        <tr>
+                            <td class="text-center">
+                                <h5>No</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>Si</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>Lona</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>Semiduro</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>Duro</h5>
+                            </td>
+                            <td class="text-center">
+                                <h5>Caja</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                {{orden.negativo}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.afirmativo}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.lona}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.semi}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.duro}}
+                            </td>
+                            <td class="text-center">
+                                {{orden.caja}}
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+                <br>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,140 @@
+{% extends 'clientesapp/base.html' %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Orden</title>
+    </head>
+    <body>
+    {% block content %}
+        <h1 class="mt-2">Ordenes</h1>
+        <hr class="mt-0 mb-4">
+        <div class="container">
+            <table class="table table-striped table-bordered table-sm" width=100%>
+                <tr>
+                    <td><h1>Orden: {{orden.num_orden}}</h1>
+                    <h4>Fecha de entrada: {{orden.fechain}}</h4>
+                    <h4>Instrumento: {{orden.instrumento}}</h4>
+                    <h4>Referencia: {{orden.referencia}}</h4>
+                    <h4>Encargado: {{orden.encargado}}</h4></td>
+
+                    <td><h1>Cliente: {{orden.client.nombre}}</h1>
+                        <h4>Fecha de salida: {{orden.fechaout}}</h4>
+                        <h4>Marca: {{orden.marca}}</h4>
+                        <h4>Serial: {{orden.serial}}</h4>
+                        <h4>Abono: {{orden.abono}}</h4>
+                    </td>
+                </tr>
+            </table>
+            Cuerdas:
+            <table class="table table-striped table-bordered table-sm" width=100%>
+                    <tr>
+                        <td>
+                            <h4>Cuerdas: {{orden.cuerdas}}</h4>
+                            {% if orden.cero8 == True %}
+                                <h4>0.8</h4>
+                            {% elif orden.cero9 == True %}
+                                <h4>0.9</h4>
+                            {% elif orden.cero10 == True %}
+                                <h4>0.10</h4>
+                            {% elif orden.cero11 == True %}
+                                <h4>0.11</h4>
+                            {% elif orden.cero12 == True %}
+                                <h4>0.12</h4>
+                            {% endif %}
+                            {% if orden.lastrajo == True %}
+                                <h4>Las Trajo: Si</h4>
+                            {% else %}
+                                <h4>Las Trajo: No</h4>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <h4> Afinacion:{{orden.afinacion}}</h4>
+                        </td>
+                    </tr>
+            </table>
+            Clase de Instrumento:
+            <table class="table table-striped table-bordered table-sm" width=100%>
+                <tr>
+                    <td>
+                        {% if orden.pfijo == True %}
+                            <h4>P. Fijo</h4>
+                        {% endif %}
+                        {% if orden.pflotante == True %}
+                            <h4>P. Flotante</h4>
+                        {% endif %}
+                        {% if orden.elac == True %}
+                            <h4>Electro-Acustica</h4>
+                        {% endif %}
+                        {% if orden.acustica == True %}
+                            <h4>Acustica</h4>
+                        {% endif %}
+                        {% if orden.bajo == True %}
+                            <h4>Bajo</h4>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if orden.teclado == True %}
+                            <h4>Teclado</h4>
+                        {% endif %}
+                        {% if orden.vientos == True %}
+                            <h4>Vientos</h4>
+                        {% endif %}
+                        {% if orden.percusion == True %}
+                            <h4>Percusion</h4>
+                        {% endif %}
+                        {% if orden.pedal == True %}
+                            <h4>Pedal</h4>
+                        {% endif %}
+                        {% if orden.amplificador == True %}
+                            <h4>Amplificador</h4>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h4>Otro: {{orden.otro}}</h4>
+                    </td>
+                </tr>
+            </table>
+            Estuche:
+            <table class="table table-striped table-bordered table-sm" width=100%>
+                <tr>
+                   <td>
+                       {% if orden.negativo == True %}
+                            <h4>Ninguno</h4>
+                       {% endif %}
+                       {% if orden.afirmativo == True %}
+                            <h4>Si</h4>
+                            {% if orden.lona == True %}
+                                <h4>Lona</h4>
+                            {% endif %}
+                            {% if orden.semi == True %}
+                                <h4>Semiduro</h4>
+                            {% endif %}
+                            {% if orden.duro == True %}
+                                <h4>Duro</h4>
+                            {% endif %}
+                            {% if orden.caja == True %}
+                                <h4>Caja</h4>
+                            {% endif %}
+                       {% endif %}
+                   </td>
+                </tr>
+            </table>
+            <table class="table table-striped table-bordered table-sm" width=100%>
+                    <tr>
+                        <td>
+                            <h4>Estado: {{ orden.estado }}</h4>
+                        </td>
+                        <td><a href="/orden/{{ orden.client.id }}/{{ orden.id }}">
+                            <span class="btn btn-success">Editar</span></a>
+                        <a href="/clientepag/{{orden.client.id}}">
+                            <span class="btn btn-success">Ver Cliente</span></a></td>
+                    </tr>
+                <tbody>
+            </table>
+        </div>
+        {% endblock %}
+    </body>
+</html>
+

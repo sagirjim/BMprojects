@@ -1,0 +1,64 @@
+{% extends 'clientesapp/base.html' %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ordenes: por fecha de entrada</title>
+        {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+    </head>
+    <body>
+        {% block content %}
+                <table class="table table-striped table-bordered table-sm">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Fecha de entrada</th>
+                        <th>Orden</th>
+                        <th>Cliente</th>
+                        <th>Instrumento</th>
+                        <th>Encargado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+
+                        {% for ordenes in orden reversed %}
+                        <tr>
+                            <td>{{ ordenes.fechain }}</td>
+                            <td>{{ ordenes.num_orden }}</td>
+                            <td>{{ ordenes.client.nombre }}</td>
+                            <td>{{ ordenes.instrumento }}</td>
+                            <td>{{ ordenes.encargado }}</td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+
+                </table>
+
+
+
+            {% if orden.has_other_pages %}
+               <ul class="pagination">
+                  {% if orden.has_previous %}
+                     <li class="page-item">
+                         <a class="page-link" href="?page={{ orden.previous_page_number }}">&laquo;</a></li>
+                  {% else %}
+                     <li class="page-item disabled"><a class="page-link"><span>&laquo;</span></a></li>
+                  {% endif %}
+                  {% for i in orden.paginator.page_range %}
+                     {% if orden.number == i %}
+                        <li class="page-item active" ><a class="page-link" href="#">
+                            {{ i }} <!--<span class="sr-only">(current)</span>--></a></li>
+                     {% elif i > orden.number|add:'-3' and i < orden.number|add:'3' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                     {% endif %}
+                  {% endfor %}
+                  {% if orden.has_next %}
+                     <li class="page-item">
+                         <a class="page-link" href="?page={{ orden.next_page_number }}">&raquo;</a></li>
+                  {% else %}
+                      <li class="page-item disabled"><a class="page-link"><span>&raquo;</span></a></li>
+                  {% endif %}
+               </ul>
+            {% endif %}
+        {% endblock %}
+    </body>
+</html>

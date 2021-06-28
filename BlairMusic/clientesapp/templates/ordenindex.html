@@ -1,0 +1,47 @@
+{% extends 'clientesapp/base.html' %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mis Ordenes</title>
+</head>
+    <body>
+
+        {% block content %}
+            <h1 class="mt-2">Ordenes: Encargado</h1>
+            <hr class="mt-0 mb-4">
+            <div class="card card-body">
+                <form method="GET">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Orden N°</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="orden" value=""/>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Buscar</button>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Cliente</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="cliente" value=""/>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Buscar</button>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <a href="/orderforclient/"><span class="position-absolute bottom-0 end-0 btn btn-success">Nueva Orden</span></a>
+                </form>
+            </div>
+        {% endblock %}
+    </body>
+</html>

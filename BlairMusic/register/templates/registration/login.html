@@ -1,0 +1,20 @@
+{% extends "clientesapp/base.html" %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+
+{% load crispy_forms_tags %}
+<body>
+
+    {% block content %}
+        <form method="POST" class="form-group">
+            {% csrf_token %}
+            {{form|crispy}}
+            <button type="submit" calss="btn btn-success">Login</button>
+            <p>No tiene una cuenta? Crear una <a href="/register">aqui</a> </p>
+        </form>
+    {% endblock %}
+</body>
+</html>

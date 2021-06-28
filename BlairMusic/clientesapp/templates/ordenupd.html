@@ -1,0 +1,210 @@
+{% extends 'clientesapp/base.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orden Update</title>
+    {% load static %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+</head>
+    <body>
+    {% block content %}
+        <form method="POST" class="post-form" action="/ordenmod/{{orden.id}}">
+                <input type="hidden" name="id" id="id" required maxlength="20" value="{{orden.id}}"/>
+                {% csrf_token %}
+                <div class="container">
+                    <br>
+                    <div class="form-group row">
+                        <label class="col-sm-1 col-form-label"></label>
+                            <div class="col-sm-4">
+                                <h3>Ingrese los Datos</h3>
+                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Orden</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="num_orden" value="{{orden.num_orden}}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Fecha de Entrada</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="fechain" value="{{orden.fechain}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Fecha de Salida</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="fechaout" value="{{orden.fechaout}}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Instrumento</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="instrumento" value="{{orden.instrumento}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Marca</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="marca" value="{{orden.marca}}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Referencia</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="referencia" value="{{orden.referencia}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Serial</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="serial" value="{{orden.serial}}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Encargado</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="encargado" value="{{orden.encargado}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Abono</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="abono" value="{{orden.abono}}"/>
+                        </div>
+                    </div>
+                    <h4>Cuerdas</h4>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Cuerdas</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="cuerdas" value="{{orden.cuerdas}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Afinacion</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="afinacion" value="{{orden.afinacion}}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">0.8</label>
+                            <div class="col-sm-4">
+                                {{orden.cero8}}<!--<input type="checkbox" name="0.8" value = "{{orden.cero8}}"/>-->
+                            </div>
+                        <label class="col-sm-2 col-form-label">0.9</label>
+                        <div class="col-sm-4">
+                            {{orden.cero9}}
+
+                        </div>
+                        <label class="col-sm-2 col-form-label">0.10</label>
+                        <div class="col-sm-4">
+                            {{orden.cero10}}<!--<input type="checkbox" name="0.10" value="{{orden.cero10}}"/>-->
+                        </div>
+                        <label class="col-sm-2 col-form-label">0.11</label>
+                        <div class="col-sm-4">
+                            {{orden.cero11}}
+                        </div>
+                        <label class="col-sm-2 col-form-label">0.12</label>
+                        <div class="col-sm-4">
+                            {{orden.cero12}}
+                        </div>
+                        <label class="col-sm-2 col-form-label">Las Trajo</label>
+                        <div class="col-sm-4">
+                            {{orden.lastrajo}}
+                        </div>
+                    </div>
+                    {% comment %}
+                    <h4>Clase de Instrumento</h4>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">P.Fijo</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="pfijo" value="{{orden.pfijo}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">P. Flotante</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="pflotante" value="{{orden.pflotante}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">E.A.</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="elac" value="{{orden.elac}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Acustica</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="acustica" value="{{orden.acustica}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Bajo</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="bajo" value="{{orden.bajo}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Teclado</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="teclado" value="{{orden.teclado}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Vientos</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="vientos" value="{{orden.vientos}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Percusion</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="percusion" value="{{orden.percusion}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Pedal</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="pedal" value="{{orden.pedal}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Amplificador</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="amplificador" value="{{orden.amplificador}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Otro:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="otro" value="{{orden.otro}}"/>
+                        </div>
+                    </div>
+                    <h4>Estuche</h4>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">No</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="negativo" value="{{orden.negativo}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Si</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="positivo" value="{{orden.positivo}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Lona</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="lona" value="{{orden.lona}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Semiduro</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="semi" value="{{orden.semi}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Duro</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="duro" value="{{orden.duro}}"/>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Caja</label>
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="caja" value="{{orden.caja}}"/>
+                        </div>
+                    </div>
+                    {% endcomment %}
+                    <br>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Estado</label>
+                        <div class="col-sm-4">
+                            <select name="select_path" id="select_path">
+
+                                {% for items in status %}
+                                    <option value ="{{items1}}">{{items.1}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Procesos</label>
+                        <div class="col-sm-4">
+                            <textarea type="text" name="procesos" value="{{orden.procesos}}">{{orden.procesos}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+    {% endblock %}
+    </body>
+</html>
