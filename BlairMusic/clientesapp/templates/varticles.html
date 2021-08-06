@@ -1,0 +1,45 @@
+{% extends 'clientesapp/base.html' %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Articulos</title>
+    </head>
+    <body>
+        {% block content %}
+            <form method="POST" class="post-form" action="{% url 'varticles' referencia.id %}">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label"></label>
+                        <div class="col-sm-4">
+                            <h3>Por favor ingrese el Articulo</h3>
+                        </div>
+                </div>
+                <div class="form-group row">
+
+                        <div class="col-sm-4">
+                            <label class="col-sm-2 col-form-label" for="proceso">Articulo</label>
+
+                                <textarea type="text" name="articulos" value="Ingrese el articulo usado"></textarea>
+
+                        </div>
+                </div>
+                <div class="form-group row">
+
+                        <div class="col-sm-4">
+                            <label class="col-sm-2 col-form-label" for="articulo">Valor:</label>
+
+                                <input type="number" name="valor" value="Costo"></div>
+
+                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary">Añadir</button>
+                    </div>
+                </div>
+            </form>
+
+        {% endblock %}
+    </body>
+</html>

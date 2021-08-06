@@ -17,7 +17,7 @@ class Orden(models.Model):
     STATUS = [
         ('En proceso', 'En proceso'),
         ('Entregado', 'Entregado'),
-        ]
+    ]
     num_orden = models.CharField(max_length=20, default='')
     fechain = models.DateField(auto_now_add=False, auto_now=False, blank=True, null=True)
     fechaout = models.DateField(auto_now_add=False, auto_now=False, blank=True, null=True)
@@ -27,7 +27,7 @@ class Orden(models.Model):
     serial = models.CharField(max_length=15, default='')
     encargado = models.CharField(max_length=50, default='')
     abono = models.CharField(max_length=15, default='')
-    procesos = models.TextField(default='')
+    # procesos = models.TextField(default='')
     estado = models.CharField(max_length=50, null=True, choices=STATUS, default='En proceso')
     client = models.ForeignKey(Cliente, on_delete=models.CASCADE, default='', related_name="client")
     # Cuerdas
@@ -60,5 +60,16 @@ class Orden(models.Model):
     caja = models.BooleanField(default=False)
 
 
+class Procesos(models.Model):
+    process = models.TextField()
+    reference = models.ForeignKey(Orden, on_delete=models.CASCADE, default='', related_name="reference")
 
 
+class Articulos(models.Model):
+    articulo = models.CharField(max_length=50, default='')
+    orden_ref = models.ForeignKey(Orden, on_delete=models.CASCADE, default='', related_name="orden_ref")
+
+
+class Valores(models.Model):
+    costo = models.IntegerField(max_length=20, default='')
+    refer = models.ForeignKey(Orden, on_delete=models.CASCADE, default='', related_name="refer")

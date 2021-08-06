@@ -1,0 +1,45 @@
+{% extends 'clientesapp/base.html' %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Procesos</title>
+    </head>
+    <body>
+        {% block content %}
+            <form method="POST" class="post-form" action="{% url 'vprocess' reference.id %}">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label"></label>
+                        <div class="col-sm-4">
+                            <h3>Por favor ingrese el proceso a realizar</h3>
+                        </div>
+                </div>
+                <div class="form-group row">
+
+                        <div class="col-sm-4">
+                            <label class="col-sm-2 col-form-label" for="proceso">Proceso</label>
+
+                                <textarea type="text" name="procesos" value="Ingrese el proceso a realizar"></textarea>
+
+                        </div>
+                </div>
+                <div class="form-group row">
+
+                        <div class="col-sm-4">
+                            <label class="col-sm-2 col-form-label" for="proceso">Valor:</label>
+
+                                <input type="number" name="valor" value="Costo"></div>
+
+                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary">Añadir</button>
+                    </div>
+                </div>
+            </form>
+
+        {% endblock %}
+    </body>
+</html>

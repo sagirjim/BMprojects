@@ -12,6 +12,21 @@
         <div class="card card-body">
             <form method="GET">
                 <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Cedula</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="cedula" value=""/>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Buscar</button>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <br>
+                <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Nombre</label>
                     <div class="col-sm-4">
                         <input type="text" name="nombre" value=""/>
@@ -26,22 +41,6 @@
                     {% endfor %}
                 {% endif %}
                 <br>
-
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Cedula</label>
-                    <div class="col-sm-4">
-                        <input type="text" name="cedula" value=""/>
-                    </div>
-                </div>
-                <button class="btn btn-primary" type="submit">Buscar</button>
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-danger" role="alert">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-
                 <a href="/clnt/"><span class="position-absolute bottom-0 end-0 btn btn-success">Nuevo Cliente</span></a>
 
 

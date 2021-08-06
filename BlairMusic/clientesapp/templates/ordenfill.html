@@ -21,11 +21,11 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Cliente</label>
                         <div class="col-sm-4">
-                            <input type="text" maxlength="20" value="{{ client.nombre }}" disabled>
+                            <input type="text" maxlength="100" value="{{ client.nombre }}" disabled>
                         </div>
                     <label class="col-sm-2 col-form-label">Orden</label>
                     <div class="col-sm-4">
-                        {{orden.num_orden}}
+                        <input type="text" maxlength="100" value="{{ orden.num_orden }}" disabled>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -71,12 +71,14 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Estado</label>
                     <div class = "dropdown">
-                        <ul class="dropdown-menu">
-                            {{ for i in orden.STATUS }}
-                            <li>{{orden.estado}}</li>
-                        </ul>
+                        <select name="estado">
+                            <option selected disabled>-- Estado --</option>
+                            <option>En proceso</option>
+                            <option>Entregado</option>
+                        </select>
                     </div>
                 </div>
+                <br>
 
                 <!-- cuerdas -->
                 <div class="card card-body">

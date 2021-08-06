@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import clienteForm, ordenForm
-from .models import Cliente, Orden
+from .forms import clienteForm, ordenForm, procesosForm, articlesForm, valoresForm
+from .models import Cliente, Orden, Procesos, Articulos, Valores
 from .filters import ClienteFilter
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
 
 
 def home(request):
@@ -149,10 +148,14 @@ def ordenindex(request):
 # Formulario para una orden nueva
 def ordenfill(request, client_id):
     if request.method == 'POST':
-        orden = ordenForm(request.POST)
-        print(orden.errors)
+        orden = ordenForm(request.POST, initial={'num_orden': 00000})
+        last = Orden.objects.all().last()
         if orden.is_valid():
+            new_num = int(last.num_orden) + 1
+            norden = str(new_num).zfill(5)
+            orden.instance.num_orden = (norden)
             orden.instance.client_id = client_id
+            orden.instance.estado = request.POST.get("estado")
             init = orden.save()
             return redirect('ordenview', id=init.id)
     else:
@@ -171,7 +174,16 @@ def ordenfill(request, client_id):
 # Visualizacion de los datos de una Orden
 def ordenview(request, id):
     orden = Orden.objects.get(id=id)
-    return render(request, 'ordenview.html', {'orden': orden})
+    proceso = Procesos.objects.all()
+    valor = Valores.objects.all()
+    product = Articulos.objects.all()
+    context = {
+        'product': product,
+        'orden': orden,
+        'proceso': proceso,
+        'valor': valor,
+    }
+    return render(request, 'ordenview.html', context)
 
 
 # Formulario para modificar una orden
@@ -232,23 +244,134 @@ def orden(request, client_id, id=None):
     return render(request, 'ordenupd.html', context)
     # return render(request, 'ordenupd.html', {})
 
+
 def vdatein(request):
-    orden = Orden.objects.all().order_by('fechain')
+    if request.method=="POST":
+        desde= request.POST.get("desde")
+        hasta = request.POST.get("hasta")
+        result = Orden.objects.raw('select id, fechain, num_orden, instrumento, encargado, estado from clientesapp_orden where fechain between "'+desde+'" and "'+hasta+'"')
 
-    page = request.GET.get('page', 1)
+        return render(request, 'vdatein.html', {'orden': result})
+    else:
+        orden = Orden.objects.all().order_by('fechain')
 
-    paginator = Paginator(orden, 1)
+        page = request.GET.get('page', 1)
 
-    try:
-        orden = paginator.page(page)
-    except PageNotAnInteger:
-        orden = paginator.page(1)
-    except EmptyPage:
-        orden = paginator.page(paginator.num_pages)
+        paginator = Paginator(orden, 20)
+
+        try:
+            orden = paginator.page(page)
+        except PageNotAnInteger:
+            orden = paginator.page(1)
+        except EmptyPage:
+            orden = paginator.page(paginator.num_pages)
+
+        context = {
+            'orden': orden,
+            'paginator': paginator,
+        }
+
+        return render(request, 'vdatein.html', context)
+
+
+def vdateout(request):
+    if request.method=="POST":
+        desde= request.POST.get("desde")
+        hasta = request.POST.get("hasta")
+        result = Orden.objects.raw('select id, fechaout, num_orden, instrumento, encargado, estado from clientesapp_orden where fechaout between "'+desde+'" and "'+hasta+'"')
+
+        return render(request, 'vdateout.html', {'orden': result})
+    else:
+        orden = Orden.objects.all().order_by('fechaout')
+
+        page = request.GET.get('page', 1)
+
+        paginator = Paginator(orden, 20)
+
+        try:
+            orden = paginator.page(page)
+        except PageNotAnInteger:
+            orden = paginator.page(1)
+        except EmptyPage:
+            orden = paginator.page(paginator.num_pages)
+
+        context = {
+            'orden': orden,
+            'paginator': paginator,
+        }
+
+        return render(request, 'vdateout.html', context)
+
+
+def informes(request):
+    return render(request, 'informes.html', {})
+
+
+def vprocess(request, reference_id):
+    if request.method == 'POST':
+        if request.POST.get('procesos'):
+            addprocess = Procesos()
+            addprocess.process = request.POST.get('procesos')
+            addprocess.reference_id = reference_id
+            addprocess.save()
+        if request.POST.get('valor'):
+            addcosto = Valores()
+            addcosto.costo = request.POST.get('valor')
+            addcosto.refer_id = reference_id
+            addcosto.save()
+        return redirect('ordenview', id=reference_id)
+        # proceso = procesosForm(request.POST)
+        #
+        # if proceso.is_valid():
+        #     proceso.instance.reference_id = reference_id
+        #     proceso.save()
+        #     return redirect('ordenview', id=reference_id)
+    else:
+        proceso = procesosForm()
+
+    reference = Orden.objects.get(id=reference_id)
+    refer = Orden.objects.get(id=reference_id)
 
     context = {
-        'orden': orden,
-        'paginator': paginator,
+        'refer': refer,
+        'proceso': proceso,
+        'reference': reference,
     }
 
-    return render(request, 'vdatein.html', context)
+    return render(request, 'vprocess.html', context)
+
+
+def varticles(request, referencia_id):
+    if request.method == 'POST':
+        if request.POST.get('articulos'):
+            additem = Articulos()
+            additem.articulo = request.POST.get('articulos')
+            additem.orden_ref_id = reference_id
+            additem.save()
+        if request.POST.get('valor'):
+            addcosto = Valores()
+            addcosto.costo = request.POST.get('valor')
+            addcosto.refer_id = reference_id
+            addcosto.save()
+        return redirect('ordenview', id=reference_id)
+        # article = articlesForm(request.POST)
+        #
+        # if article.is_valid():
+        #     article.instance.reference_id = referencia_id
+        #
+        #     article.save()
+        #
+        #     return redirect('ordenview', id=referencia_id)
+    else:
+        article = articlesForm()
+
+    referencia = Orden.objects.get(id=referencia_id)
+    refer = Orden.objects.get(id=reference_id)
+
+    context = {
+        'refer': refer,
+        'article': article,
+        'referencia': referencia,
+    }
+
+    return render(request, 'varticle.html', context)

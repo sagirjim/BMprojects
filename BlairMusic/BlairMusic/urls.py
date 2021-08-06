@@ -36,8 +36,13 @@ urlpatterns = [
     path('ordenupd/<int:id>', cv.ordenupd, name="ordenupd"),
     path('ordenmod/<int:id>', cv.ordenmod, name="ordenmod"),
     path('register/', v.register, name="register"),
-    path('orden/<int:client_id>', cv.orden, name="orden"),
-    path('orden/<int:client_id>/<int:id>', cv.orden, name="orden"),
+    # path('orden/<int:client_id>', cv.orden, name="orden"),
+    # path('orden/<int:client_id>/<int:id>', cv.orden, name="orden"),
     path('vdatein', cv.vdatein, name="vdatein"),
+    path('vdateout', cv.vdateout, name="vdateout"),
+    path('vprocess/<int:reference_id>', cv.vprocess, name="vprocess"),
+    path('varticles/<int:referencia_id>', cv.varticles, name="varticles"),
+    path('informes', cv.informes, name="informes"),
+
     path('', include("django.contrib.auth.urls")),
 ]

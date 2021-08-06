@@ -1,0 +1,32 @@
+{% extends 'clientesapp/base.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Informes</title>
+</head>
+<body>
+    {% block content %}
+        <h1 class="mt-2">Informes</h1>
+        <hr class="mt-0 mb-4">
+        <div class="card card-body">
+            <form method="GET">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Ordenes por:</label>
+                    <div class="col-sm-4">
+                        <a href="vdatein">
+                            <span class="btn btn-success">Fecha de Entrada</span></a>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Ordenes por:</label>
+                    <div class="col-sm-4">
+                        <a href="vdateout">
+                            <span class="btn btn-success">Fecha de Salida</span></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endblock %}
+</body>
+</html>

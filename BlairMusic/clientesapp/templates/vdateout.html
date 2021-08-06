@@ -2,13 +2,13 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Ordenes: por fecha de entrada</title>
+        <title>Ordenes: por fecha de salida</title>
         {% load static %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
     </head>
     <body>
         {% block content %}
-            <h2>Ordenes por Fecha de Ingreso</h2>
+            <h2>Ordenes por Fecha de Entrega</h2>
             <br>
             <h4>Mostrar por Fecha</h4>
             <form method="POST">
@@ -20,6 +20,7 @@
                 <table class="table table-striped table-bordered table-sm">
                     <thead class="thead-dark">
                     <tr>
+                        <th>Fecha de salida</th>
                         <th>Fecha de entrada</th>
                         <th>Orden</th>
                         <th>Cliente</th>
@@ -29,20 +30,23 @@
                     </tr>
                     </thead>
 
-                    {% for ordenes in orden reversed %}
-                        {% if ordenes.estado == 'En proceso' %}
-                            <tr>
-                                <td>{{ ordenes.fechain }}</td>
-                                <td>{{ ordenes.num_orden }}</td>
-                                <td>{{ ordenes.client.nombre }}</td>
-                                <td>{{ ordenes.instrumento }}</td>
-                                <td>{{ ordenes.encargado }}</td>
-                                <td>{{ ordenes.estado }}</td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
+                        {% for ordenes in orden reversed %}
+                            {% if ordenes.estado == "Entregado" %}
+                                <tr>
+                                    <td>{{ ordenes.fechaout }}</td>
+                                    <td>{{ ordenes.fechain }}</td>
+                                    <td>{{ ordenes.num_orden }}</td>
+                                    <td>{{ ordenes.client.nombre }}</td>
+                                    <td>{{ ordenes.instrumento }}</td>
+                                    <td>{{ ordenes.encargado }}</td>
+                                    <td></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+
                 </table>
             </form>
+
 
             {% if orden.has_other_pages %}
                <ul class="pagination">

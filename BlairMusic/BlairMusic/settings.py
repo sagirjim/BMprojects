@@ -41,7 +41,6 @@ DJANGO_APPS = [
 THIRDPARTY_APPS = [
     'crispy_forms',
     'django_filters',
-    'django_rangepaginator',
 ]
 
 CUSTOM_APPS = [
@@ -87,11 +86,11 @@ WSGI_APPLICATION = 'BlairMusic.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'blairmusic3',
+        'NAME': 'blairmusic',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
-        'PORT': '3306',
+        'PORT': '3307',
         'OPTIONS': {
             'sql_mode': 'traditional',
         }
