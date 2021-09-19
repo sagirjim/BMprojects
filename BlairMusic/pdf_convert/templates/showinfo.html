@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PDFsave</title>
+</head>
+<body>
+{% block content %}
+    <hr class="mt-0 mb-4">
+    <div class="container">
+        <table class="table table-striped table-bordered table-sm" width=100%>
+            <tr>
+                <td><h2>Orden: {{orden.num_orden}}</h2></td>
+                <td><h2>Cliente: {{orden.client.nombre}}</h2></td>
+            </tr>
+            <tr>
+                <td><h2>Fecha de entrada: {{orden.fechain}}</h2></td>
+                <td><h2>Fecha de salida: {{orden.fechaout}}</h2></td>
+            </tr>
+            <tr>
+                <td><h2>Instrumento: {{orden.instrumento}}</h2></td>
+                <td><h2>Marca: {{orden.marca}}</h2></td>
+            </tr>
+            <tr>
+                <td><h2>Referencia: {{orden.referencia}}</h2></td>
+                <td><h2>Serial: {{orden.serial}}</h2></td>
+            </tr>
+            <tr>
+                <td><h2>Encargado: {{orden.encargado}}</h2></td>
+                <td><h2>Abono: {{orden.abono}}</h2></td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}
+</body>
+</html>

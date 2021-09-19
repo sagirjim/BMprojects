@@ -18,27 +18,27 @@ class Orden(models.Model):
         ('En proceso', 'En proceso'),
         ('Entregado', 'Entregado'),
     ]
-    num_orden = models.CharField(max_length=20, default='')
-    fechain = models.DateField(auto_now_add=False, auto_now=False, blank=True, null=True)
+    num_orden = models.CharField(max_length=20, default='', null=True, blank=True)
+    fechain = models.DateField(auto_now_add=True, auto_now=False, blank=True, null=True)
     fechaout = models.DateField(auto_now_add=False, auto_now=False, blank=True, null=True)
     instrumento = models.CharField(max_length=30, default='')
     marca = models.CharField(max_length=20)
     referencia = models.CharField(max_length=30, default='')
     serial = models.CharField(max_length=15, default='')
     encargado = models.CharField(max_length=50, default='')
-    abono = models.CharField(max_length=15, default='')
+    abono = models.CharField(max_length=15, default='', blank=True, null=True)
     # procesos = models.TextField(default='')
     estado = models.CharField(max_length=50, null=True, choices=STATUS, default='En proceso')
     client = models.ForeignKey(Cliente, on_delete=models.CASCADE, default='', related_name="client")
     # Cuerdas
-    cuerdas = models.CharField(max_length=50, default='')
+    cuerdas = models.CharField(max_length=50, default='', blank=True, null=True)
     cero8 = models.BooleanField(default=False)
     cero9 = models.BooleanField(default=False)
     cero10 = models.BooleanField(default=False)
     cero11 = models.BooleanField(default=False)
     cero12 = models.BooleanField(default=False)
     lastrajo = models.BooleanField(default=False)
-    afinacion = models.CharField(max_length=50, default='')
+    afinacion = models.CharField(max_length=50, default='', blank=True, null=True)
     # Clase de Instrumento
     pfijo = models.BooleanField(default=False)
     pflotante = models.BooleanField(default=False)
@@ -50,7 +50,7 @@ class Orden(models.Model):
     percusion = models.BooleanField(default=False)
     pedal = models.BooleanField(default=False)
     amplificador = models.BooleanField(default=False)
-    otro = models.CharField(max_length=50, default='', null=True)
+    otro = models.CharField(max_length=50, default='', null=True, blank=True)
     # Estuche
     negativo = models.BooleanField(default=False)
     afirmativo = models.BooleanField(default=False)
@@ -70,6 +70,13 @@ class Articulos(models.Model):
     orden_ref = models.ForeignKey(Orden, on_delete=models.CASCADE, default='', related_name="orden_ref")
 
 
+
 class Valores(models.Model):
     costo = models.IntegerField(max_length=20, default='')
     refer = models.ForeignKey(Orden, on_delete=models.CASCADE, default='', related_name="refer")
+    show_ref = models.CharField(max_length=1, default='')
+
+
+class Imagenes(models.Model):
+    imagen = models.ImageField(null=True, blank=True, upload_to="images/")
+    ref_guia = models.ForeignKey(Orden, on_delete=models.CASCADE, default='', related_name="ref_guia")

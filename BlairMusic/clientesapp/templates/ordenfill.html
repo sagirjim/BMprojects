@@ -31,7 +31,7 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Fecha de Entrada</label>
                     <div class="col-sm-4">
-                        {{orden.fechain}}
+                        <input type="text" value="{% now 'Y-m-d' %}" disabled>
                     </div>
                     <label class="col-sm-2 col-form-label">Fecha de Salida</label>
                     <div class="col-sm-4">

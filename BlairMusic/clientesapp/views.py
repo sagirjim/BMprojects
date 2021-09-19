@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import clienteForm, ordenForm, procesosForm, articlesForm, valoresForm
-from .models import Cliente, Orden, Procesos, Articulos, Valores
+from .forms import clienteForm, ordenForm, procesosForm, articlesForm, valoresForm, imagenesForm
+from .models import Cliente, Orden, Procesos, Articulos, Valores, Imagenes
 from .filters import ClienteFilter
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+import datetime
 
 def home(request):
     return render(request, 'home.html', {})
@@ -147,15 +147,22 @@ def ordenindex(request):
 
 # Formulario para una orden nueva
 def ordenfill(request, client_id):
+    fecha = datetime
     if request.method == 'POST':
-        orden = ordenForm(request.POST, initial={'num_orden': 00000})
+        orden = ordenForm(request.POST, initial={'num_orden': '1'})
+        #orden = ordenForm(request.POST)
+        #initial = 0
         last = Orden.objects.all().last()
         if orden.is_valid():
-            new_num = int(last.num_orden) + 1
-            norden = str(new_num).zfill(5)
+            if last is None:
+                new_num = 0
+            else:
+                new_num = int(last.num_orden) + 1
+            norden = str(new_num).zfill(4)
             orden.instance.num_orden = (norden)
             orden.instance.client_id = client_id
             orden.instance.estado = request.POST.get("estado")
+            orden.instance.fechain = fecha
             init = orden.save()
             return redirect('ordenview', id=init.id)
     else:
@@ -164,6 +171,7 @@ def ordenfill(request, client_id):
     client = Cliente.objects.get(id=client_id)
 
     context = {
+        'fecha': fecha,
         'orden': orden,
         'client': client,
     }
@@ -177,7 +185,12 @@ def ordenview(request, id):
     proceso = Procesos.objects.all()
     valor = Valores.objects.all()
     product = Articulos.objects.all()
+    price = int(0)
+    for item in valor:
+        if item.refer_id == orden.id:
+            price = price + item.costo
     context = {
+        'total': price,
         'product': product,
         'orden': orden,
         'proceso': proceso,
@@ -318,14 +331,9 @@ def vprocess(request, reference_id):
             addcosto = Valores()
             addcosto.costo = request.POST.get('valor')
             addcosto.refer_id = reference_id
+            addcosto.show_ref = '1'
             addcosto.save()
         return redirect('ordenview', id=reference_id)
-        # proceso = procesosForm(request.POST)
-        #
-        # if proceso.is_valid():
-        #     proceso.instance.reference_id = reference_id
-        #     proceso.save()
-        #     return redirect('ordenview', id=reference_id)
     else:
         proceso = procesosForm()
 
@@ -346,27 +354,20 @@ def varticles(request, referencia_id):
         if request.POST.get('articulos'):
             additem = Articulos()
             additem.articulo = request.POST.get('articulos')
-            additem.orden_ref_id = reference_id
+            additem.orden_ref_id = referencia_id
             additem.save()
         if request.POST.get('valor'):
             addcosto = Valores()
             addcosto.costo = request.POST.get('valor')
-            addcosto.refer_id = reference_id
+            addcosto.refer_id = referencia_id
+            addcosto.show_ref = '2'
             addcosto.save()
-        return redirect('ordenview', id=reference_id)
-        # article = articlesForm(request.POST)
-        #
-        # if article.is_valid():
-        #     article.instance.reference_id = referencia_id
-        #
-        #     article.save()
-        #
-        #     return redirect('ordenview', id=referencia_id)
+        return redirect('ordenview', id=referencia_id)
     else:
         article = articlesForm()
 
     referencia = Orden.objects.get(id=referencia_id)
-    refer = Orden.objects.get(id=reference_id)
+    refer = Orden.objects.get(id=referencia_id)
 
     context = {
         'refer': refer,
@@ -374,4 +375,26 @@ def varticles(request, referencia_id):
         'referencia': referencia,
     }
 
-    return render(request, 'varticle.html', context)
+    return render(request, 'varticles.html', context)
+
+def load_images(request, ref_guia_id):
+
+    if request.method == "POST":
+        loadim = Imagenes()
+        loadim.ref_guia_id = ref_guia_id
+        loadim.imagen = request.FILES['image']
+        loadim.save()
+        return redirect('ordenview', id=ref_guia_id)
+    else:
+        images = imagenesForm()
+
+    ref_guia = Orden.objects.get(id=ref_guia_id)
+    imgs = Imagenes.objects.all()
+
+    context = {
+        'imgs': imgs,
+        'ref_guia': ref_guia,
+        'images': images,
+    }
+
+    return render(request, 'load_images.html', context)

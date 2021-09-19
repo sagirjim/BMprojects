@@ -25,6 +25,8 @@
                     </td>
                 </tr>
             </table>
+            <a href="/pdf_create/{{ orden.id }}"><span class="btn btn-success">Exportar a PDF</span></a>
+            <br>
             Cuerdas:
             <table class="table table-striped table-bordered table-sm" width=100%>
                     <tr>
@@ -133,81 +135,112 @@
                     </tr>
                 <tbody>
             </table>
+            <div>
+                <table class="table table-striped table-bordered table-sm">
+                    <tr>
+                        <td>
+                            <a href="/vprocess/{{ orden.id }}"><span class="btn btn-success">Agregar Proceso</span></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <div class="row">
-                <div class="column">
-                    <table class="table table-striped table-bordered table-sm" width=100%>
-                            <tr>
-                                <td>
-                                    <a href="/vprocess/{{ orden.id }}"><span class="btn btn-success">Agregar Proceso</span></a>
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h4>Procesos</h4>
-                                </td>
-                                <td>
-                                    <h4>Costo</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {% for item in product %}
-                                        {% if item.orde_ref_id == orden.id %}
-                                            {{ item.articulo }}
-                                        {% endif %}
-                                    {% endfor %}
-                                </td>
-                                <td>
-                                    {% for item in valor %}
-                                        {% if item.refer_id == orden.id %}
-                                            {{ item.costo }}
-                                        {% endif %}
-                                    {% endfor %}
-                                </td>
-                            </tr>
-
-                        <tbody>
-                    </table>
-                </div>
-                <div class="column">
+                <div class="col">
                     <table class="table table-striped table-bordered table-sm">
-                        <tr>
-                            <td>
-                                <a href="/varticles/{{ orden.id }}"><span class="btn btn-success">Agregar Producto</span></a>
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h4>Articulo</h4>
-                            </td>
-                            <td>
-                                <h4>Costo</h4>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {% for item in product %}
-                                    {% if item.reference_id == orden.id %}
+                        <th>
+                            <h3>Proceso</h3>
+                        </th>
+                        {% for item in proceso %}
+                            {% if item.reference_id == orden.id %}
+                                <tr>
+                                    <td>
                                         {{ item.process }}
-                                    {% endif %}
-                                {% endfor %}
-                            </td>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="col">
+                    <table class="table table-striped table-bordered table-sm">
+                        <th>
+                            <h3>Costo</h3>
+                        </th>
+                        {% for item in valor %}
+                            {% if item.refer_id == orden.id %}
+                                {% if item.show_ref == '1' %}
+                                    <tr>
+                                        <td>
+                                            {{ item.costo }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </div>
+                <div>
+                    <table class="table table-striped table-bordered table-sm" width=100%>
+                        <tr>
                             <td>
-                                {% for item in valor %}
-                                    {% if item.refer_id == orden.id %}
-                                        {{ item.costo }}
-                                    {% endif %}
-                                {% endfor %}
+                                <a href="/varticles/{{ orden.id }}"><span class="btn btn-success">Agregar Articulo</span></a>
                             </td>
                         </tr>
                     </table>
                 </div>
+                <div class="row">
+                    <div class="col">
+                        <table class="table table-striped table-bordered table-sm">
+                            <th>
+                                <h3>Articulo</h3>
+                            </th>
+                            {% for item in product %}
+                                {% if item.orden_ref_id == orden.id %}
+                                    <tr>
+                                        <td>
+                                            {{ item.articulo }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="col">
+                        <table class="table table-striped table-bordered table-sm">
+                            <th>
+                                <h3>Costo</h3>
+                            </th>
+                            {% for item in valor %}
+                                {% if item.refer_id == orden.id %}
+                                    {% if item.show_ref == '2' %}
+                                        <tr>
+                                            <td>
+                                                {{ item.costo }}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <div>
+                <table>
+                    <tr>
+                        <td>
+                            <h4>Total:</h4>
+                        </td>
+                        <td>
+                            <h4>{{ total }}</h4>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
+        <a href="/load_images/{{ orden.id }}"><span class="btn btn-success">Añadir Imagen</span></a>
         {% endblock %}
     </body>
 </html>

@@ -1,5 +1,4 @@
 """BlairMusic URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
 Examples:
@@ -17,6 +16,9 @@ from django.contrib import admin
 from django.urls import path, include
 from clientesapp import views as cv
 from register import views as v
+from pdf_convert import views as pdfv
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -43,6 +45,8 @@ urlpatterns = [
     path('vprocess/<int:reference_id>', cv.vprocess, name="vprocess"),
     path('varticles/<int:referencia_id>', cv.varticles, name="varticles"),
     path('informes', cv.informes, name="informes"),
+    #path('showinfo/<int:id>', pdfv.showinfo, name="showinfo"),
+    path('pdf_create/<int:id>', pdfv.pdf_create, name="pdf_create"),
 
     path('', include("django.contrib.auth.urls")),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

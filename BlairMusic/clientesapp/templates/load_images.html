@@ -1,0 +1,37 @@
+{% extends 'clientesapp/base.html' %}
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Imagenes</title>
+    </head>
+    <body>
+        {% block content %}
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+
+                        <div class="col-sm-4">
+                            <label class="col-sm-2 col-form-label" for="imagen">Agregue una Imagen:</label>
+                            <input type="file" required name="image" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn btn-primary">Añadir</button>
+                        </div>
+                    </div>
+                </form>
+
+
+                {% for item in imgs %}
+                    <img src="{{ item.imagen.url }}">
+                    <br><br>
+                {%  endfor %}
+
+
+        {% endblock %}
+    </body>
+</html>

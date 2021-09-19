@@ -1,5 +1,5 @@
 from django import forms
-from clientesapp.models import Cliente, Orden, Procesos, Articulos, Valores
+from clientesapp.models import Cliente, Orden, Procesos, Articulos, Valores, Imagenes
 
 
 class clienteForm(forms.ModelForm):
@@ -12,6 +12,7 @@ class ordenForm(forms.ModelForm):
     class Meta:
         model = Orden
         exclude = [
+            "fechain",
             "num_orden",
             "client",
             "estado",
@@ -36,7 +37,15 @@ class articlesForm(forms.ModelForm):
 
 class valoresForm(forms.ModelForm):
     class Meta:
-        model = Articulos
+        model = Valores
         exclude = [
             "refer",
+            "show_ref",
+        ]
+
+class imagenesForm(forms.ModelForm):
+    class Meta:
+        model = Imagenes
+        exclude = [
+            "ref_guia",
         ]
