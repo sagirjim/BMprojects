@@ -12,10 +12,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.contrib.auth import views as auth_views
 from django.contrib import admin
 from django.urls import path, include
 from clientesapp import views as cv
-from register import views as v
+from users import views as us
 from pdf_convert import views as pdfv
 from django.conf import settings
 from django.conf.urls.static import static
@@ -37,7 +38,11 @@ urlpatterns = [
     path('ordenview/<int:id>', cv.ordenview, name="ordenview"),
     path('ordenupd/<int:id>', cv.ordenupd, name="ordenupd"),
     path('ordenmod/<int:id>', cv.ordenmod, name="ordenmod"),
-    path('register/', v.register, name="register"),
+
+    path('register/', us.register, name="register"),
+    path('profile/', us.profile, name="profile"),
+    path('login/', auth_views.LoginView.as_view(template_name = 'users/login.html'), name="login"),
+    path('logout/', auth_views.LogoutView.as_view(template_name = 'users/logout.html'), name="logout"),
     # path('orden/<int:client_id>', cv.orden, name="orden"),
     # path('orden/<int:client_id>/<int:id>', cv.orden, name="orden"),
     path('vdatein', cv.vdatein, name="vdatein"),
@@ -47,6 +52,8 @@ urlpatterns = [
     path('informes', cv.informes, name="informes"),
     #path('showinfo/<int:id>', pdfv.showinfo, name="showinfo"),
     path('pdf_create/<int:id>', pdfv.pdf_create, name="pdf_create"),
+    path('excel_create/<int:id>', pdfv.excel_create, name="excel_create"),
+    path('load_images/<int:ref_guia_id>', cv.load_images, name="load_images"),
 
     path('', include("django.contrib.auth.urls")),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

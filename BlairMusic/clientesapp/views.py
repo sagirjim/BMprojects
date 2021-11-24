@@ -4,13 +4,16 @@ from .models import Cliente, Orden, Procesos, Articulos, Valores, Imagenes
 from .filters import ClienteFilter
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 import datetime
 
+@login_required()
 def home(request):
     return render(request, 'home.html', {})
 
 
 # Herramienta de busqueda para encontrar Clientes
+@login_required()
 def clientesindex(request):
     if 'nombre' in request.GET:
         nombre = request.GET['nombre']
@@ -36,6 +39,7 @@ def clientesindex(request):
 
 
 # Herramienta de Busqueda para asignar un cliente a una orden.
+@login_required()
 def orderforclient(request):
     if 'nombre' in request.GET:
         nombre = request.GET['nombre']
@@ -60,6 +64,7 @@ def orderforclient(request):
 
 
 # Funcion para guardar el formulario de un cliente nuevo
+@login_required()
 def clnt(request):
     if request.method == 'POST':
         form = clienteForm(request.POST)
@@ -110,6 +115,7 @@ def update(request, id):
 
 
 # Visualizacion de los datos del cliente
+@login_required()
 def clientepag(request, id):
     cliente = Cliente.objects.get(id=id)
     ordenes = Orden.objects.all()
@@ -121,6 +127,7 @@ def clientepag(request, id):
 
 
 # Herramienta para busqueda de una orden especifica
+@login_required()
 def ordenindex(request):
     if 'orden' in request.GET:
         orden = request.GET['orden']
@@ -146,6 +153,7 @@ def ordenindex(request):
 
 
 # Formulario para una orden nueva
+@login_required()
 def ordenfill(request, client_id):
     fecha = datetime
     if request.method == 'POST':
@@ -180,6 +188,7 @@ def ordenfill(request, client_id):
 
 
 # Visualizacion de los datos de una Orden
+@login_required()
 def ordenview(request, id):
     orden = Orden.objects.get(id=id)
     proceso = Procesos.objects.all()
@@ -257,7 +266,7 @@ def orden(request, client_id, id=None):
     return render(request, 'ordenupd.html', context)
     # return render(request, 'ordenupd.html', {})
 
-
+@login_required()
 def vdatein(request):
     if request.method=="POST":
         desde= request.POST.get("desde")
@@ -286,7 +295,7 @@ def vdatein(request):
 
         return render(request, 'vdatein.html', context)
 
-
+@login_required()
 def vdateout(request):
     if request.method=="POST":
         desde= request.POST.get("desde")
@@ -315,11 +324,11 @@ def vdateout(request):
 
         return render(request, 'vdateout.html', context)
 
-
+@login_required()
 def informes(request):
     return render(request, 'informes.html', {})
 
-
+@login_required()
 def vprocess(request, reference_id):
     if request.method == 'POST':
         if request.POST.get('procesos'):
@@ -348,7 +357,7 @@ def vprocess(request, reference_id):
 
     return render(request, 'vprocess.html', context)
 
-
+@login_required()
 def varticles(request, referencia_id):
     if request.method == 'POST':
         if request.POST.get('articulos'):
@@ -377,6 +386,7 @@ def varticles(request, referencia_id):
 
     return render(request, 'varticles.html', context)
 
+@login_required()
 def load_images(request, ref_guia_id):
 
     if request.method == "POST":

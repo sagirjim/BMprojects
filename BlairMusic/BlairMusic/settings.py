@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+#import account.models
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -45,8 +47,9 @@ THIRDPARTY_APPS = [
 
 CUSTOM_APPS = [
     'clientesapp.apps.ClientesappConfig',
-    'register.apps.RegisterConfig',
     'pdf_convert.apps.PdfConvertConfig',
+    'users.apps.UsersConfig',
+
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRDPARTY_APPS + CUSTOM_APPS
@@ -143,4 +146,6 @@ STATICFILES_DIRS = (
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "home"
+LOGIN_URL = "login"
+
